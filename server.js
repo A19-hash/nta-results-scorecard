@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
@@ -20,23 +19,8 @@ if (fs.existsSync(envPath)) {
     }
 }
 
-const mongoUri = process.env.MONGODB_URI;
-const skipDb = process.env.SKIP_DB === "true" || !mongoUri;
-
-if (skipDb) {
-    console.log("Skipping MongoDB connection. Student records will use data/students.json.");
-} else {
-    mongoose
-        .connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(() => console.log("MongoDB connected"))
-        .catch((err) => {
-            console.warn("MongoDB connection error:", err.message || err);
-            console.warn("Running without a MongoDB connection.");
-        });
-}
+process.env.SKIP_DB = "true";
+console.log("Using data/students.json for student records.");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

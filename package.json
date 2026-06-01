@@ -1,7 +1,7 @@
 {
     "name": "neet-result-portal",
     "version": "1.0.0",
-    "description": "NEET result portal built with Express, EJS, hosted result links, and optional MongoDB.",
+    "description": "NEET result portal built with Express, EJS, hosted result links, and local JSON storage.",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
@@ -14,11 +14,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "cloudinary": "^2.10.0",
         "ejs": "^3.1.9",
         "express": "^5.2.1",
         "express-session": "^1.17.3",
-        "mongoose": "^7.4.0",
         "multer": "^2.1.1"
     }
 }

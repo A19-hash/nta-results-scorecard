@@ -16,9 +16,7 @@
             <div>
                 <h1>Student Records</h1>
                 <p>
-                    <%= usingDatabase ? "Connected to MongoDB" : "Saving records to data/students.json" %>
-                    -
-                    <%= cloudinaryReady ? "Cloudinary uploads enabled" : "Paste hosted links or configure Cloudinary uploads" %>
+                    Saving records to data/students.json - Paste hosted result links
                 </p>
             </div>
             <form action="/admin/logout" method="POST" class="inline-form">
@@ -27,89 +25,109 @@
         </section>
 
         <% if (message) { %>
-            <p class="notice"><%= message %></p>
-        <% } %>
+            <p class="notice">
+                <%= message %>
+            </p>
+            <% } %>
 
-        <section class="split-layout">
-            <form class="panel-form" action="<%= editStudent ? `/admin/students/${editStudent._id}` : '/admin/students' %>" method="POST" enctype="multipart/form-data">
-                <h2><%= editStudent ? "Edit Student" : "Add Student" %></h2>
+                <section class="split-layout">
+                    <form class="panel-form"
+                        action="<%= editStudent ? `/admin/students/${editStudent._id}` : '/admin/students' %>"
+                        method="POST" enctype="multipart/form-data">
+                        <h2>
+                            <%= editStudent ? "Edit Student" : "Add Student" %>
+                        </h2>
 
-                <label for="application_no">Application Number</label>
-                <input id="application_no" name="application_no" value="<%= editStudent?.application_no || '' %>" required>
+                        <label for="application_no">Application Number</label>
+                        <input id="application_no" name="application_no"
+                            value="<%= editStudent?.application_no || '' %>" required>
 
-                <label for="student_name">Student Name</label>
-                <input id="student_name" name="student_name" value="<%= editStudent?.student_name || '' %>" required>
+                        <label for="student_name">Student Name</label>
+                        <input id="student_name" name="student_name" value="<%= editStudent?.student_name || '' %>"
+                            required>
 
-                <label for="password">Password</label>
-                <input id="password" name="password" value="<%= editStudent?.password || '' %>" placeholder="Defaults to application number">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" value="<%= editStudent?.password || '' %>"
+                            placeholder="Defaults to application number">
 
-                <label for="email">Email</label>
-                <input id="email" type="email" name="email" value="<%= editStudent?.email || '' %>">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" name="email" value="<%= editStudent?.email || '' %>">
 
-                <label for="result_pdf">Result PDF or Image Link</label>
-                <input id="result_pdf" type="url" name="result_pdf" value="<%= editStudent?.result_pdf || '' %>" placeholder="https://drive.google.com/file/d/.../view">
+                        <label for="result_pdf">Result PDF or Image Link</label>
+                        <input id="result_pdf" type="url" name="result_pdf" value="<%= editStudent?.result_pdf || '' %>"
+                            placeholder="https://drive.google.com/file/d/.../view">
 
-                <label for="result_file">Upload Result File</label>
-                <input id="result_file" type="file" name="result_file" accept=".pdf,image/*" <%= cloudinaryReady ? "" : "disabled" %>>
-                <p class="field-help">
-                    <% if (cloudinaryReady) { %>
-                        Upload a PDF or image to Cloudinary, or paste a hosted link above.
-                    <% } else { %>
-                        File upload needs Cloudinary. For now, paste a Google Drive or hosted result link above.
-                    <% } %>
-                </p>
+                        <label for="result_file">Upload Result PDF</label>
+                        <input id="result_file" type="file" name="result_file" accept="application/pdf">
 
-                <div class="button-row">
-                    <button type="submit"><%= editStudent ? "Save Changes" : "Add Student" %></button>
-                    <% if (editStudent) { %>
-                        <a class="secondary-button" href="/admin/students">Cancel</a>
-                    <% } %>
-                </div>
-            </form>
+                        <p class="field-help">
+                            Either paste a hosted result link above or upload a PDF file here. Uploaded files are stored
+                            in <code>public/uploads</code>.
+                        </p>
 
-            <section class="table-panel">
-                <% if (students.length === 0) { %>
-                    <div class="empty-state">
-                        <h2>No students yet</h2>
-                        <p>Add a student record to enable portal login.</p>
-                    </div>
-                <% } else { %>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Application</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Result</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% students.forEach((student) => { %>
-                                <tr>
-                                    <td><%= student.application_no %></td>
-                                    <td><%= student.student_name %></td>
-                                    <td><%= student.email || "-" %></td>
-                                    <td>
-                                        <% if (student.result_pdf) { %>
-                                            <a href="<%= student.result_pdf %>" target="_blank" rel="noreferrer">Open</a>
-                                        <% } else { %>
-                                            -
-                                        <% } %>
-                                    </td>
-                                    <td class="actions">
-                                        <a class="secondary-button small" href="/admin/students/<%= student._id %>/edit">Edit</a>
-                                        <form action="/admin/students/<%= student._id %>/delete" method="POST">
-                                            <button class="danger-button small" type="submit">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                <% } %>
-            </section>
-        </section>
+                        <div class="button-row">
+                            <button type="submit">
+                                <%= editStudent ? "Save Changes" : "Add Student" %>
+                            </button>
+                            <% if (editStudent) { %>
+                                <a class="secondary-button" href="/admin/students">Cancel</a>
+                                <% } %>
+                        </div>
+                    </form>
+
+                    <section class="table-panel">
+                        <% if (students.length===0) { %>
+                            <div class="empty-state">
+                                <h2>No students yet</h2>
+                                <p>Add a student record to enable portal login.</p>
+                            </div>
+                            <% } else { %>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Application</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Result</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% students.forEach((student)=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= student.application_no %>
+                                                </td>
+                                                <td>
+                                                    <%= student.student_name %>
+                                                </td>
+                                                <td>
+                                                    <%= student.email || "-" %>
+                                                </td>
+                                                <td>
+                                                    <% if (student.result_pdf) { %>
+                                                        <a href="<%= student.result_pdf %>" target="_blank"
+                                                            rel="noreferrer">Open</a>
+                                                        <% } else { %>
+                                                            -
+                                                            <% } %>
+                                                </td>
+                                                <td class="actions">
+                                                    <a class="secondary-button small"
+                                                        href="/admin/students/<%= student._id %>/edit">Edit</a>
+                                                    <form action="/admin/students/<%= student._id %>/delete"
+                                                        method="POST">
+                                                        <button class="danger-button small"
+                                                            type="submit">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                                <% } %>
+                    </section>
+                </section>
     </main>
 </body>
 
