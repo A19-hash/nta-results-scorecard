@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NEET Result Login</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="top-header">
+        NATIONAL ELIGIBILITY CUM ENTRANCE TEST (UG) - 2026
+    </div>
+
+    <div class="main-box">
+
+        <div class="blue-bar">
+            Login Through Application Number & Password
+        </div>
+
+        <form action="/login" method="POST">
+            <% if (error) { %>
+                <p class="error"><%= error %></p>
+            <% } %>
+
+            <label for="application_no">Application Number</label>
+
+            <input id="application_no" type="text" name="application_no" required>
+
+            <label for="password">Password</label>
+
+            <input id="password" type="password" name="password" required>
+
+            <label for="captcha">Security Pin</label>
+
+            <input id="captcha" type="text" name="captcha" required>
+
+            <img src="/captcha" class="captcha-img" alt="Security pin">
+
+            <button type="submit">
+                Submit
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

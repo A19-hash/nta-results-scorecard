@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Admin Login | NEET Result Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="top-header compact">NEET Result Portal Admin</div>
+
+    <div class="main-box">
+        <div class="blue-bar">Admin Login</div>
+
+        <form action="/admin/login" method="POST">
+            <% if (error) { %>
+                <p class="error"><%= error %></p>
+            <% } %>
+
+            <label for="username">Username</label>
+            <input id="username" name="username" autocomplete="username" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" autocomplete="current-password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>

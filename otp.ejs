@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="blue-bar">OTP Verification</div>
+        <form action="/otp" method="POST">
+            <% if (message) { %>
+                <p class="notice"><%= message %></p>
+            <% } %>
+            <label for="otp">OTP</label>
+            <input id="otp" type="text" name="otp" required>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+</body>
+
+</html>

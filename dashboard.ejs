@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Student Dashboard | NEET Result Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header class="top-header compact">
+        NATIONAL ELIGIBILITY CUM ENTRANCE TEST (UG) - 2026
+    </header>
+
+    <main class="result-shell">
+        <section class="result-card">
+            <div>
+                <p class="eyebrow">Candidate Dashboard</p>
+                <h1><%= student.student_name %></h1>
+                <p>Application Number: <strong><%= student.application_no %></strong></p>
+                <% if (student.email) { %>
+                    <p>Email: <strong><%= student.email %></strong></p>
+                <% } %>
+            </div>
+
+            <% if (student.result_pdf) { %>
+                <a class="download-button" href="<%= student.result_pdf %>" target="_blank" rel="noreferrer">Open Result PDF</a>
+            <% } else { %>
+                <p class="notice">Your result PDF has not been uploaded yet.</p>
+            <% } %>
+
+            <form action="/logout" method="POST">
+                <button class="secondary-button" type="submit">Logout</button>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>
