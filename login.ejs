@@ -21,26 +21,28 @@
 
         <form action="/login" method="POST">
             <% if (error) { %>
-                <p class="error"><%= error %></p>
-            <% } %>
+                <p class="error">
+                    <%= error %>
+                </p>
+                <% } %>
 
-            <label for="application_no">Application Number</label>
+                    <label for="application_no">Application Number</label>
 
-            <input id="application_no" type="text" name="application_no" required>
+                    <input id="application_no" type="text" name="application_no" required>
 
-            <label for="password">Password</label>
+                    <label for="password">Password</label>
 
-            <input id="password" type="password" name="password" required>
+                    <input id="password" type="password" name="password" required>
 
-            <label for="captcha">Security Pin</label>
+                    <label for="captcha">Security Pin</label>
 
-            <input id="captcha" type="text" name="captcha" required>
+                    <input id="captcha" type="text" name="captcha" required>
 
-            <img src="/captcha" class="captcha-img" alt="Security pin">
+                    <img src="/captcha" class="captcha-img" alt="Security pin">
 
-            <button type="submit">
-                Submit
-            </button>
+                    <button type="submit">
+                        Submit
+                    </button>
 
         </form>
 

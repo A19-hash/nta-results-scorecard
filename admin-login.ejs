@@ -14,16 +14,22 @@
 
         <form action="/admin/login" method="POST">
             <% if (error) { %>
-                <p class="error"><%= error %></p>
-            <% } %>
+                <p class="error">
+                    <%= error %>
+                </p>
+                <% } %>
 
-            <label for="username">Username</label>
-            <input id="username" name="username" autocomplete="username" required>
+                    <label for="username">Username</label>
+                    <input id="username" name="username" autocomplete="username" required>
 
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password" autocomplete="current-password" required>
 
-            <button type="submit">Login</button>
+
+
+
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" autocomplete="current-password" required>
+
+                    <button type="submit">Login</button>
         </form>
     </div>
 </body>

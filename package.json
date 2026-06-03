@@ -1,11 +1,11 @@
 {
     "name": "neet-result-portal",
     "version": "1.0.0",
-    "description": "NEET result portal built with Express, EJS, hosted result links, and local JSON storage.",
+    "description": "NEET result portal built with Express, EJS, hosted result links, and MongoDB storage.",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "dev": "set SKIP_DB=true&& node server.js",
+        "dev": "node server.js",
         "check": "node --check server.js && node --check routes/adminRoutes.js && node --check routes/authRoutes.js && node --check routes/studentRoutes.js && node --check utils/captcha.js"
     },
     "engines": {
@@ -17,6 +17,7 @@
         "ejs": "^3.1.9",
         "express": "^5.2.1",
         "express-session": "^1.17.3",
+        "mongoose": "^7.5.0",
         "multer": "^2.1.1"
     }
 }

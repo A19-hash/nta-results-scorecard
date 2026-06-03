@@ -16,7 +16,7 @@
             <div>
                 <h1>Student Records</h1>
                 <p>
-                    Saving records to data/students.json - Paste hosted result links
+                    Saving records to MongoDB - paste hosted result links or upload PDFs
                 </p>
             </div>
             <form action="/admin/logout" method="POST" class="inline-form">
@@ -38,6 +38,33 @@
                             <%= editStudent ? "Edit Student" : "Add Student" %>
                         </h2>
 
+                        <label for="father_name">Father / Guardian Name</label>
+                        <input id="father_name" type="text" name="father_name"
+                            value="<%= editStudent?.father_name || '' %>">
+
+                        <label for="mother_name">Mother / Guardian Name</label>
+                        <input id="mother_name" type="text" name="mother_name"
+                            value="<%= editStudent?.mother_name || '' %>">
+
+                        <label for="date_of_birth">Date of Birth</label>
+                        <input id="date_of_birth" type="date" name="date_of_birth"
+                            value="<%= editStudent?.date_of_birth || '' %>">
+
+                        <label for="gender">Gender</label>
+                        <input id="gender" type="text" name="gender" value="<%= editStudent?.gender || '' %>">
+
+                        <label for="nationality">Nationality</label>
+                        <input id="nationality" type="text" name="nationality"
+                            value="<%= editStudent?.nationality || '' %>">
+
+                        <label for="address">Address</label>
+                        <input id="address" type="text" name="address" value="<%= editStudent?.address || '' %>">
+
+                        <label for="category">Category</label>
+                        <input id="category" type="text" name="category" value="<%= editStudent?.category || '' %>">
+
+
+
                         <label for="application_no">Application Number</label>
                         <input id="application_no" name="application_no"
                             value="<%= editStudent?.application_no || '' %>" required>
@@ -50,19 +77,12 @@
                         <input id="password" name="password" value="<%= editStudent?.password || '' %>"
                             placeholder="Defaults to application number">
 
-                        <label for="email">Email</label>
-                        <input id="email" type="email" name="email" value="<%= editStudent?.email || '' %>">
-
-                        <label for="result_pdf">Result PDF or Image Link</label>
-                        <input id="result_pdf" type="url" name="result_pdf" value="<%= editStudent?.result_pdf || '' %>"
-                            placeholder="https://drive.google.com/file/d/.../view">
-
                         <label for="result_file">Upload Result PDF</label>
                         <input id="result_file" type="file" name="result_file" accept="application/pdf">
 
                         <p class="field-help">
-                            Either paste a hosted result link above or upload a PDF file here. Uploaded files are stored
-                            in <code>public/uploads</code>.
+                            Upload the student result PDF file here. Uploaded files are stored in
+                            <code>public/uploads</code>.
                         </p>
 
                         <div class="button-row">
@@ -87,7 +107,7 @@
                                         <tr>
                                             <th>Application</th>
                                             <th>Name</th>
-                                            <th>Email</th>
+                                            <th>Category</th>
                                             <th>Result</th>
                                             <th>Actions</th>
                                         </tr>
@@ -102,7 +122,7 @@
                                                     <%= student.student_name %>
                                                 </td>
                                                 <td>
-                                                    <%= student.email || "-" %>
+                                                    <%= student.category || "-" %>
                                                 </td>
                                                 <td>
                                                     <% if (student.result_pdf) { %>
@@ -113,13 +133,18 @@
                                                             <% } %>
                                                 </td>
                                                 <td class="actions">
-                                                    <a class="secondary-button small"
-                                                        href="/admin/students/<%= student._id %>/edit">Edit</a>
-                                                    <form action="/admin/students/<%= student._id %>/delete"
-                                                        method="POST">
-                                                        <button class="danger-button small"
-                                                            type="submit">Delete</button>
-                                                    </form>
+                                                    <% if (student.result_pdf) { %>
+                                                        <a class="secondary-button small"
+                                                            href="/admin/students/<%= student._id %>/print"
+                                                            target="_blank">Print</a>
+                                                        <% } %>
+                                                            <a class="secondary-button small"
+                                                                href="/admin/students/<%= student._id %>/edit">Edit</a>
+                                                            <form action="/admin/students/<%= student._id %>/delete"
+                                                                method="POST">
+                                                                <button class="danger-button small"
+                                                                    type="submit">Delete</button>
+                                                            </form>
                                                 </td>
                                             </tr>
                                             <% }) %>

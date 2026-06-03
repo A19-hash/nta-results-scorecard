@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Print Result PDF</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .pdf-wrapper {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-frame {
+            flex: 1;
+            border: 0;
+            width: 100%;
+        }
+
+        .notice-panel {
+            padding: 16px;
+            text-align: center;
+            background: #f7f7f7;
+        }
+    </style>
+    <script>
+        function printPdf() {
+            const frame = document.getElementById("pdfFrame");
+            if (frame && frame.contentWindow) {
+                try {
+                    frame.contentWindow.focus();
+                    frame.contentWindow.print();
+                } catch (error) {
+                    console.warn("Could not auto-print embedded PDF:", error);
+                }
+            }
+        }
+
+        window.addEventListener("load", () => {
+            printPdf();
+        });
+    </script>
+</head>
+
+<body>
+
+    <% if (student.result_pdf) { %>
+        <div class="pdf-wrapper">
+            <iframe id="pdfFrame" class="pdf-frame" src="<%= student.result_pdf %>"></iframe>
+        </div>
+        <div class="notice-panel">
+            <p>If the PDF preview does not load, <a href="<%= student.result_pdf %>" target="_blank"
+                    rel="noreferrer">open the result PDF directly</a>.</p>
+        </div>
+        <% } else { %>
+            <div class="pdf-wrapper">
+                <div class="notice-panel">
+                    <h1>Result PDF not available</h1>
+                    <p>The selected student does not have a result PDF uploaded yet.</p>
+                </div>
+            </div>
+            <% } %>
+
+</body>
+
+</html>

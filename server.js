@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -19,8 +20,21 @@ if (fs.existsSync(envPath)) {
     }
 }
 
-process.env.SKIP_DB = "true";
-console.log("Using data/students.json for student records.");
+const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/neet-result-portal";
+
+async function connectDatabase() {
+    try {
+        await mongoose.connect(mongoUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+
+        console.log(`Connected to MongoDB at ${mongoUri}`);
+    } catch (error) {
+        console.error("MongoDB connection failed:", error.message);
+        process.exit(1);
+    }
+}
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -86,5 +100,5 @@ function startServer(targetPort) {
     });
 }
 
-startServer(port);
+connectDatabase().then(() => startServer(port));
 

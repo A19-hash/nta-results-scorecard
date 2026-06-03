@@ -11,11 +11,15 @@
         <div class="blue-bar">OTP Verification</div>
         <form action="/otp" method="POST">
             <% if (message) { %>
-                <p class="notice"><%= message %></p>
-            <% } %>
-            <label for="otp">OTP</label>
-            <input id="otp" type="text" name="otp" required>
-            <button type="submit">Verify</button>
+                <p class="notice">
+                    <%= message %>
+                </p>
+                <% } %>
+                    <p class="field-help">Enter the one-time password sent after login. If you do not receive it, check
+                        the server console for the current OTP.</p>
+                    <label for="otp">OTP</label>
+                    <input id="otp" type="text" name="otp" required>
+                    <button type="submit">Verify</button>
         </form>
     </div>
 </body>
