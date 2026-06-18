@@ -2,7 +2,6 @@ const express = require("express");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
-const mongoose = require("mongoose");
 
 const app = express();
 
@@ -17,22 +16,6 @@ if (fs.existsSync(envPath)) {
 
         const [key, ...valueParts] = trimmed.split("=");
         process.env[key.trim()] ??= valueParts.join("=").trim();
-    }
-}
-
-const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/neet-result-portal";
-
-async function connectDatabase() {
-    try {
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-
-        console.log(`Connected to MongoDB at ${mongoUri}`);
-    } catch (error) {
-        console.error("MongoDB connection failed:", error.message);
-        process.exit(1);
     }
 }
 
@@ -66,11 +49,9 @@ app.use((req, res, next) => {
 });
 
 const authRoutes = require("./routes/authRoutes");
-const adminRoutes = require("./routes/adminRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 
 app.use("/", authRoutes);
-app.use("/admin", adminRoutes);
 app.use("/student", studentRoutes);
 
 app.get("/", (req, res) => {
@@ -100,5 +81,5 @@ function startServer(targetPort) {
     });
 }
 
-connectDatabase().then(() => startServer(port));
+startServer(port);
 
